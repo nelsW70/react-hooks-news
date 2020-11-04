@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 export default function App() {
@@ -8,7 +8,11 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const getResults = useCallback(async () => {
+  useEffect(() => {
+    getResults();
+  }, []);
+
+  const getResults = async () => {
     setLoading(true);
 
     try {
@@ -20,11 +24,7 @@ export default function App() {
       setError(err);
     }
     setLoading(false);
-  }, [query]);
-
-  useEffect(() => {
-    getResults();
-  }, [query, getResults]);
+  };
 
   const handleSearch = event => {
     event.preventDefault();
